@@ -4,21 +4,23 @@ library(dplyr)
 library(tidyr)
 
 ui <- fluidPage(
-  titlePanel("Queerness, Reproduction, and Genetic Drift"),
+  titlePanel("Reproduction Traits and Genetic Drift"),
   sidebarLayout(
     sidebarPanel(
       numericInput("pop_size", "Starting Population Size", value = 75, min = 10, max = 100, step = 10),
       numericInput("rounds", "Generations (Simulation Rounds)", value = 5, min = 1, max = 10, step = 1),
       actionButton("simulate", "Run Simulation"), 
       h3("Simulation"),
-      p("In this simulation, four haploid alleles represent individuals within a metapopulation. A reproductive trait, which is associated with each individual for the duration of that individuals life, impacts how alleles are passed on from each generation. When an individual reproduces, their offpsring has the same allele. Each generation, after reproduction, a subset of individuals die and are removed from the metapopulation. The simulation plays out over 5-10 generations and then reports resulting allele frequencies and reproductive trait strategy frequencies in the metapopulation."),
+      p("In this simulation, four haploid alleles represent individuals within a metapopulation. A reproductive trait, which is associated with each individual for the duration of that individuals life, impacts how alleles are passed on from each generation. 
+        When an individual reproduces, their offpsring has the same allele. Each generation, after reproduction, a subset of individuals die and are removed from the metapopulation. 
+        The simulation plays out over 5-10 generations and then reports resulting allele frequencies and reproductive trait strategy frequencies in the metapopulation."),
       h3("Reproductive Traits"),
       tags$ul(
-        tags$li("Reproductive: Alleles paired with this trait will produce one offspring per generation"), 
-        tags$li("Non-Reproductive: Alleles paired with this trait will not reproduce in the next generation"), 
-        tags$li("Multiple Partners: Alleles paired with this trait will reproduce with multiple partners, producing between 2-3 offspring per generation"),
-        tags$li("Disperser: Alleles paired with this trait “migrate” between each round, distributing alleles across the metapopulation each generation"),  
-        tags$li("Self-Fertilization: Alleles paired with this trait will produce one offspring in the next generation"), 
+        tags$li("Trait 1 (Reproductive): Alleles paired with this trait will produce one offspring per generation"), 
+        tags$li("Trait 2 (Non-Reproductive): Alleles paired with this trait will not reproduce in the next generation"), 
+        tags$li("Trait 3 (Multiple Partners): Alleles paired with this trait will reproduce with multiple partners, producing between 2-3 offspring per generation"),
+        tags$li("Trait 4 (Disperser): Alleles paired with this trait “migrate” between each round, distributing alleles across the metapopulation each generation"),  
+        tags$li("Trait 5 (Self-Fertilization): Alleles paired with this trait will produce one offspring in the next generation"), 
       )
     ),
     mainPanel(
@@ -79,7 +81,7 @@ ui <- fluidPage(
                    tags$li(a("Website", href = "https://www.madeline-eppley.com")),
                    tags$li(a("GitHub", href = "https://www.github.com/madeline-eppley"))
                  ),
-                 h4("Date Last Updated: 2025-02-18"),
+                 h4("Date Last Updated: 2025-03-17"),
                  h4("Lesson Plan and Resources"),
                  tags$ul(
                    tags$li(a("Lesson Plan on Genetic Drift", href="https://qubeshub.org/community/groups/rie2")),
@@ -104,7 +106,7 @@ ui <- fluidPage(
                  h3("Queerness and Its Impact on Understanding Genetic Drift"), 
                  h4("Discussion Questions"),
                  p("1. Queer theory proposes that there is no essentialism to sex or gender. Rather, gender and sex are performative actions and genetics are representative, descriptive conditions that create reality (Butler 2004; Prum 2023). Thus, individual genes cannot be the cause of any one trait or identity. Does the simulation activity support or refute essentialism?"),
-                 tags$details("Alleles were unassociated with a reproductive approach. Instead, reproduction was aligned with the definition of descriptive condition from Queer theory. The idea of genetic essentialism is upended by the activity."),
+                 tags$details("Alleles were unassociated with a reproductive approach. Instead, reproduction was aligned with the definition of descriptive condition from Queer theory. The idea of genetic essentialism is upended by the activity. It is important to note that despite decades of investigation, evolutionary biology and ecology cannot answer the question of why queerness exists, and this activity is not trying to explain the mechanism by which queerness does exist."),
                  tags$br(),
                  tags$br(),
                  p("2. Queer theory proposes that identities are not fixed or binary, rather they are fluid and continuous interpretations of self that can change over time. How can this perspective help us better understand biological processes like genetic drift?"),
@@ -125,16 +127,16 @@ server <- function(input, output) {
     
     # define alleles & repro traits
     alleles <- c("Z", "X", "Y", "C")
-    traits <- c("Reproductive", "Non-Reproductive", "Multiple Partners", "Disperser", "Self-Fertilization")
+    traits <- c("Trait 1 (Reproductive)", "Trait 2 (Non-Reproductive)", "Trait 3 (Multiple Partners)", "Trait 4 (Disperser)", "Trait 5 (Self-Fertilization)")
     
     allele_colors <- c("Z" = "#0080FFFF", "X" = "#99EEFFFF", "Y" = "#FF8000FF", "C" = "#FFC44CFF")
     
     # Custom colors for reproductive strategies
-    trait_colors <- c("Reproductive" = "#00496FFF", 
-                      "Non-Reproductive" = "#0F85A0FF", 
-                      "Multiple Partners" = "#EDD746FF", 
-                      "Disperser" = "#ED8B00FF", 
-                      "Self-Fertilization" = "#DD4124FF")
+    trait_colors <- c("Trait 1 (Reproductive)" = "#00496FFF", 
+                      "Trait 2 (Non-Reproductive)" = "#0F85A0FF", 
+                      "Trait 3 (Multiple Partners)" = "#EDD746FF", 
+                      "Trait 4 (Disperser)" = "#ED8B00FF", 
+                      "Trait 5 (Self-Fertilization)" = "#DD4124FF")
     
     # equal weights all traits
     trait_weights <- c(0.25, 0.25, 0.25, 0.25, 0.25)
@@ -159,11 +161,11 @@ server <- function(input, output) {
       new_offspring <- population %>%
         rowwise() %>%
         mutate(Offspring = case_when(
-          Trait == "Reproductive" ~ 1,
-          Trait == "Non-Reproductive" ~ 0,
-          Trait == "Multiple Partners" ~ sample(2:3, 1),
-          Trait == "Disperser" ~ 1, 
-          Trait == "Self-Fertilization" ~ 1
+          Trait == "Trait 1 (Reproductive)" ~ 1,
+          Trait == "Trait 2 (Non-Reproductive)" ~ 0,
+          Trait == "Trait 3 (Multiple Partners)" ~ sample(2:3, 1),
+          Trait == "Trait 4 (Disperser)" ~ 1, 
+          Trait == "Trait 5 (Self-Fertilization)" ~ 1
         )) %>%
         ungroup()
       
@@ -211,7 +213,7 @@ server <- function(input, output) {
       ggplot(results_allele_df, aes(x = Round, y = n, color = Allele, group = Allele)) +
         geom_line() + geom_point() +
         scale_color_manual(values = allele_colors) +
-        labs(title = "allele frequencies in metapopulation", x = "Round", y = "Count", color = "Allele") +
+        labs(title = "alleles in metapopulation", x = "Round", y = "Count", color = "Allele") +
         theme_minimal()
     })
     
@@ -219,7 +221,7 @@ server <- function(input, output) {
       ggplot(results_trait_df, aes(x = Round, y = n, color = Trait, group = Trait)) +
         geom_line() + geom_point() +
         scale_color_manual(values = trait_colors) +
-        labs(title = "reproductive strategy frequencies in metapopulation", x = "Round", y = "Count", color = "Reproductive Strategy") +
+        labs(title = "reproductive strategies in metapopulation", x = "Round", y = "Count", color = "Reproductive Strategy") +
         theme_minimal()
     })
     
