@@ -4,7 +4,7 @@ library(dplyr)
 library(tidyr)
 
 ui <- fluidPage(
-  titlePanel("Reproduction Traits and Genetic Drift"),
+  titlePanel("Simulating Genetic Drift with Biological Traits in a Metapopulation"),
   sidebarLayout(
     sidebarPanel(
       numericInput("pop_size", "Starting Population Size", value = 75, min = 10, max = 100, step = 10),
@@ -13,14 +13,14 @@ ui <- fluidPage(
       h3("Simulation"),
       p("In this simulation, four haploid alleles represent individuals within a metapopulation. A reproductive trait, which is associated with each individual for the duration of that individuals life, impacts how alleles are passed on from each generation. 
         When an individual reproduces, their offpsring has the same allele. Each generation, after reproduction, a subset of individuals die and are removed from the metapopulation. 
-        The simulation plays out over 5-10 generations and then reports resulting allele frequencies and reproductive trait strategy frequencies in the metapopulation."),
+        The simulation plays out over 5-10 generations depending on user input and then reports the counts of alleles and individuals with each reproductive trait in the metapopulation."),
       h3("Reproductive Traits"),
       tags$ul(
-        tags$li("Trait 1 (Reproductive): Alleles paired with this trait will produce one offspring per generation"), 
-        tags$li("Trait 2 (Non-Reproductive): Alleles paired with this trait will not reproduce in the next generation"), 
-        tags$li("Trait 3 (Multiple Partners): Alleles paired with this trait will reproduce with multiple partners, producing between 2-3 offspring per generation"),
-        tags$li("Trait 4 (Disperser): Alleles paired with this trait “migrate” between each round, distributing alleles across the metapopulation each generation"),  
-        tags$li("Trait 5 (Self-Fertilization): Alleles paired with this trait will produce one offspring in the next generation"), 
+        tags$li("Trait 1: Alleles paired with this trait will produce one offspring per generation"), 
+        tags$li("Trait 2: Alleles paired with this trait will not reproduce in the next generation"), 
+        tags$li("Trait 3: Alleles paired with this trait will reproduce with multiple partners, producing between 2-3 offspring per generation"),
+        tags$li("Trait 4: Alleles paired with this trait “migrate” between each round, distributing alleles across the metapopulation each generation"),  
+        tags$li("Trait 5: Alleles paired with this trait will produce one offspring in the next generation"), 
       )
     ),
     mainPanel(
@@ -38,7 +38,7 @@ ui <- fluidPage(
                  verbatimTextOutput("chi_square_trait"), 
                  
                  h3("Understanding False Positives in Statistical Tests"),
-                
+                 
                  
                  tags$aside(
                    h4("Calculating an expected rate of false positive tests"),
@@ -66,45 +66,45 @@ ui <- fluidPage(
                  
                  h3("Evaluate your simulation results"), 
                  tags$ul(
-                 tags$li("Did you detect a significant chi-squared test result for reproductive traits?"), 
-                 tags$li("If so, how many times did you run the simulation?"),
-                 tags$li("Do you think that your results were due to random chance or not?"),
+                   tags$li("Did you detect a significant chi-squared test result for reproductive traits?"), 
+                   tags$li("If so, how many times did you run the simulation?"),
+                   tags$li("Do you think that your results were due to random chance or not?"),
                  ),
                  tags$br(),
                  tags$br()
         ),
         tabPanel("About", 
                  h3("About This Lesson Plan and Simulation Activity"),
-                 p("The learning objective of this simulation is to integrate queer theory and fundamental evolutionary concepts to improve understanding of randomness and stochasticity in evolution. Specifically, this activity uses approaches from Queer theory to more inclusively teach the concept of genetic drift. This lesson was developed for the Genetic Drift working group within the Resources for Inclusive Education Working Group (RIE2)."),
+                 p("The learning objective of this simulation is to integrate queer theory and fundamental evolutionary concepts to improve understanding of randomness and stochasticity in evolution. Specifically, this activity uses perspectives in queer theory to more inclusively teach the concept of stochasticity and genetic drift. This lesson was developed for the Genetic Drift working group within the Resources for Inclusive Education Working Group (RIE2)."),
                  h4("Author: Madeline G. Eppley"),
                  tags$ul(
                    tags$li(a("Website", href = "https://www.madeline-eppley.com")),
                    tags$li(a("GitHub", href = "https://www.github.com/madeline-eppley"))
                  ),
-                 h4("Date Last Updated: 2025-03-17"),
+                 h4("Date Last Updated: 2025-03-18"),
                  h4("Lesson Plan and Resources"),
                  tags$ul(
                    tags$li(a("Lesson Plan on Genetic Drift", href="https://qubeshub.org/community/groups/rie2")),
                    tags$li(a("Resources for Inclusive Education Working Group", href="https://qubeshub.org/community/groups/rie2"))
                  )
         ),
-        tabPanel("Pre-Simulation Learning Activity", 
-                 h3("Learning about Queerness in Nature through Evolutionary Biology"),
-                 h4("Pre-reading List"), 
+        
+        tabPanel("Post-Simulation Learning Activity", 
+                 h3("Genetic Drift and diversity of reproductive traits in nature"),
+                 h4("Reading List"), 
                  tags$ul(
                    tags$li(a("What Evolutionary Biology Can and Can't Tell Us About Sex, Gender, and Sexuality", href="https://thereader.mitpress.mit.edu/what-evolutionary-biology-can-and-cant-tell-us-about-sex-gender-and-sexuality/")),
                    tags$li(a("Gender-Inclusive Biology Evolution’s Rainbow: A Queer Species Database of 200+ Organisms", href="https://riversuh.com/lesson-plans/2019/11/20/book-report-evolutions-rainbow-diversity-gender-amp-sexuality-in-nature-amp-people"))
                  ),
-                 h4("Questions to Answer from Pre-readings"),
+                 
+                 h4("Activity: The diversity of reproductive traits in nature"),
                  p("1: Are science concepts black-and-white, or is there ongoing discourse about terminology and definitions, even for seemingly simple concepts? Provide an example."),
-                 p("2: Choose one organism from the Queer species database on the Gender-Inclusive Biology website. Answer the following questions:"),
-                 p("2a: Did you know that the organism that you chose exhibited queerness before today? Write a few sentences describing the mechanism of queerness (e.g., is it gametic, morphological, behavioral, sexual, etc.)."),
-                 p("2b: Open a Google Scholar search page and enter your organism's scientific and/or common name. Browse through the first ~5 papers. Do any of them mention queer behavior when describing the organism?"), 
-                 p("2c: Do you think that assuming two sexes that directly correspond to gender gives an accurate representation of the diversity of organisms? Explain.")
-        ),
-        tabPanel("Post-Simulation Learning Activity", 
-                 h3("Queerness and Its Impact on Understanding Genetic Drift"), 
-                 h4("Discussion Questions"),
+                 p("2: Choose one organism from the species database on the Gender-Inclusive Biology website. Answer the following questions:"),
+                 p("2a: Write a few sentences describing the organism's mechanism of diversity (e.g., is it gametic, morphological, behavioral, sexual, etc.)."),
+                 p("2b: Open a Google Scholar search page and enter your organism's scientific and/or common name. Browse through the first ~5 papers. Do any of them mention your findings when describing the organism's life history?"), 
+                 p("2c: Do you think that assuming two sexes that directly correspond to gender gives an accurate representation of the diversity of biological life? Explain."),
+                 
+                 h4("Discussion: Simulation Questions"),
                  p("1. Queer theory proposes that there is no essentialism to sex or gender. Rather, gender and sex are performative actions and genetics are representative, descriptive conditions that create reality (Butler 2004; Prum 2023). Thus, individual genes cannot be the cause of any one trait or identity. Does the simulation activity support or refute essentialism?"),
                  tags$details("Alleles were unassociated with a reproductive approach. Instead, reproduction was aligned with the definition of descriptive condition from Queer theory. The idea of genetic essentialism is upended by the activity. It is important to note that despite decades of investigation, evolutionary biology and ecology cannot answer the question of why queerness exists, and this activity is not trying to explain the mechanism by which queerness does exist."),
                  tags$br(),
@@ -127,16 +127,16 @@ server <- function(input, output) {
     
     # define alleles & repro traits
     alleles <- c("Z", "X", "Y", "C")
-    traits <- c("Trait 1 (Reproductive)", "Trait 2 (Non-Reproductive)", "Trait 3 (Multiple Partners)", "Trait 4 (Disperser)", "Trait 5 (Self-Fertilization)")
+    traits <- c("Trait 1", "Trait 2", "Trait 3", "Trait 4", "Trait 5")
     
     allele_colors <- c("Z" = "#0080FFFF", "X" = "#99EEFFFF", "Y" = "#FF8000FF", "C" = "#FFC44CFF")
     
     # Custom colors for reproductive strategies
-    trait_colors <- c("Trait 1 (Reproductive)" = "#00496FFF", 
-                      "Trait 2 (Non-Reproductive)" = "#0F85A0FF", 
-                      "Trait 3 (Multiple Partners)" = "#EDD746FF", 
-                      "Trait 4 (Disperser)" = "#ED8B00FF", 
-                      "Trait 5 (Self-Fertilization)" = "#DD4124FF")
+    trait_colors <- c("Trait 1" = "#00496FFF", 
+                      "Trait 2" = "#0F85A0FF", 
+                      "Trait 3" = "#EDD746FF", 
+                      "Trait 4" = "#ED8B00FF", 
+                      "Trait 5" = "#DD4124FF")
     
     # equal weights all traits
     trait_weights <- c(0.25, 0.25, 0.25, 0.25, 0.25)
@@ -161,11 +161,11 @@ server <- function(input, output) {
       new_offspring <- population %>%
         rowwise() %>%
         mutate(Offspring = case_when(
-          Trait == "Trait 1 (Reproductive)" ~ 1,
-          Trait == "Trait 2 (Non-Reproductive)" ~ 0,
-          Trait == "Trait 3 (Multiple Partners)" ~ sample(2:3, 1),
-          Trait == "Trait 4 (Disperser)" ~ 1, 
-          Trait == "Trait 5 (Self-Fertilization)" ~ 1
+          Trait == "Trait 1" ~ 1,
+          Trait == "Trait 2" ~ 0,
+          Trait == "Trait 3" ~ sample(2:3, 1),
+          Trait == "Trait 4" ~ 1, 
+          Trait == "Trait 5" ~ 1
         )) %>%
         ungroup()
       
